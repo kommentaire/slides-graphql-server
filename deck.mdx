@@ -1,0 +1,225 @@
+import { Image, Appear, Notes, Head, Split, Horizontal } from 'mdx-deck'
+import {
+  CodeSurfer,
+  CodeSurferColumns,
+  Step,
+} from "code-surfer";
+import { github, vsDark } from "@code-surfer/themes";
+import "prismjs/components/prism-kotlin"
+
+<Head>
+  <title>GraphQL</title>
+</Head>
+
+# GraphQL
+
+<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/1200px-GraphQL_Logo.svg.png' width='300'/>
+
+---
+
+# La technologie :rocket:
+
+<Appear>
+
+## Créée ET utilisée par Facebook
+
+## Outil de requêtage basé sur HTTP
+
+</Appear>
+
+---
+
+<img src='https://blog.octo.com/wp-content/uploads/2018/07/screenshot_2018-07-10-graphql-vs-rest-ouvrons-les-yeux-1-1024x649.png' width='1200'/>
+
+---
+
+# Les notions clés :dart:
+
+---
+
+# Contrat entre client et server
+
+<ul>
+
+<Appear>
+
+<li>Utilisable sur plusieurs langages</li>
+<li>Documentation auto-générée par le code</li>
+<li>Typé et possible de documenter</li>
+<li>Développement client/server indépendants</li>
+
+</Appear>
+
+</ul>
+
+---
+
+<CodeSurfer theme={vsDark}>
+
+```graphql title="Schéma GraphQL"
+type Adresse {
+  code: String
+  code_hexacle_voie: String
+  code_insee: String
+  code_postal: String
+  code_rivoli: String
+  commune: String
+  compl_voie: String
+  id: Long!
+  maj_par_mediapost: Boolean
+  nom_voie: String
+  num_voie: Int
+  type_voie: String
+  batiments(refParam: String): [Batiment!]!
+}
+
+type Batiment {
+  ad_bat_code: String
+  adr: Adresse
+  cas_particulier: String
+  conditions_syndic: String
+  coordonnees: Coordonnees
+  escaliers(ref: String): [Escalier!]!
+  etat: String
+  etat_elig: String
+  etat_net_designer: String
+  etat_prerac: String
+  id: Long!
+  id_immeuble: String
+  id_netdesigner: String
+  nombre_logement_immeuble: Int
+  ref: String
+  source: String
+  type_desserte_abonne: String
+  type_logement: String
+}
+
+type Coordonnees {
+  id: Long
+  rgf93: String
+  wgs84: String
+}
+
+type Escalier {
+  batiment: Batiment
+  etages(ref: String): [Etage!]!
+  id: Long!
+  ref: String
+}
+
+type Etage {
+  escalier: Escalier
+  id: Long!
+  ptos(actif: Boolean, existant: Boolean, ref: String, rompu: Boolean): [Pto!]!
+  ref: String
+}
+
+type Pto {
+  etage: Etage
+  id: Long!
+  ref: String
+  source: String
+  statut_access: String
+  statut_actif: Boolean
+  statut_existant: Boolean
+  statut_net_designer: String
+  type: String
+}
+
+type Query {
+  adresse(codeInsee: String, codePostal: String, codeRivoli: String, cpltVoie: String, numVoie: Int, refVoieOi: String): [Adresse!]!
+}
+```
+
+```diff 69:71 subtitle="Queries pour requêter les adresses"
+
+```
+
+
+```diff 1:15 subtitle="Type Adresse"
+
+```
+
+```diff 17:37 subtitle="Type Batiment"
+
+```
+
+
+</CodeSurfer>
+
+---
+
+# GraphQL :heart: HTTP
+
+<ul>
+
+<Appear>
+
+<li>Un seul et unique endpoint (`/graphql`)</li>
+<li>Une seule méthode HTTP (POST)</li>
+<li>Echange de données au format JSON</li>
+<li>Sécurisable par token</li>
+
+</Appear>
+
+</ul>
+
+---
+
+# _GraphQL is a better REST_ :punch:
+
+---
+
+# REST 🆚 GraphQL
+
+<Split>
+
+<Appear>
+
+Overfetching : données inutiles
+
+Underfetching : manque de données et plusieurs appels
+
+Plusieurs endpoints
+
+</Appear>
+
+<Appear>
+
+Declarative fetching
+
+Dans une seule requête HTTP sur plusieurs queries
+
+Un seul endpoint
+
+</Appear>
+
+
+</Split>
+
+---
+
+# GraphQL :v:
+
+<Appear>
+
+### Contrat d'échange typé toujours à jour
+### Plus performant (nombre de requêtes et declarative fetching)
+### Optimisé pour de la recherche
+### Exploitation simple (intégré à SB, endpoint HTTP)
+
+</Appear>
+
+---
+
+
+# Questions ?
+
+<img src='https://media0.giphy.com/media/3ohzdRoOp1FUYbtGDu/giphy.gif' width='50%'/>
+
+---
+# Demo time !
+
+[GraphiQL](http://localhost:8081/playground)
+
+<img src='https://media3.giphy.com/media/2n8480RCQ2jBe/giphy.gif' width='30%'/>
