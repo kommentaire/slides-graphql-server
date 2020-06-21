@@ -8,32 +8,77 @@ import { github, vsDark } from "@code-surfer/themes";
 import "prismjs/components/prism-kotlin"
 
 <Head>
-  <title>GraphQL</title>
+  <title>GraphQL :heart: Kotlin</title>
 </Head>
 
-# GraphQL
+# GraphQL :heart: Kotlin
 
-<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/1200px-GraphQL_Logo.svg.png' width='300'/>
+<Split>
+
+  <img style="margin-right:2em;" src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin-logo.svg/800px-Kotlin-logo.svg.png' width='100'/>
+
+  <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/1200px-GraphQL_Logo.svg.png' width='300'/>
+
+</Split>
 
 ---
 
-# La technologie :rocket:
+# L'instant promo
+
+<Split>
+
+<img src='https://upload.wikimedia.org/wikipedia/fr/c/c8/Twitter_Bird.svg' width='100'/>
+
+[@AurelienAudelin](https://twitter.com/AurelienAudelin)
+
+</Split>
+
+<Split>
+
+<img src='https://www.solutions-numeriques.com/wp-content/uploads/2015/01/linkedin-1424358279.png' width='100'/>
+
+[in/aaudelin](https://www.linkedin.com/in/aaudelin/)
+
+</Split>
+
+<Split>
+
+<img src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' width='100'/>
+
+[aaudelin](https://github.com/aaudelin)
+
+</Split>
+
+---
+
+# On commence quand ?
+
+<img src='https://media1.giphy.com/media/tXL4FHPSnVJ0A/giphy.gif' width='500'/>
+
+
+---
+
+# Son histoire :rocket:
 
 <Appear>
 
-## Créée ET utilisée par Facebook
+## Créée par Facebook en 2012
 
-## Outil de requêtage basé sur HTTP
+## Rendu open source en 2015
 
 </Appear>
 
 ---
 
-<img src='https://blog.octo.com/wp-content/uploads/2018/07/screenshot_2018-07-10-graphql-vs-rest-ouvrons-les-yeux-1-1024x649.png' width='1200'/>
-
----
-
 # Les notions clés :dart:
+
+<Appear>
+
+## Langage de requêtage pour API (query, mutation, subscription)
+
+## Runtime côté server pour traiter les requêtes
+
+</Appear>
 
 ---
 
@@ -47,6 +92,41 @@ import "prismjs/components/prism-kotlin"
 <li>Documentation auto-générée par le code</li>
 <li>Typé et possible de documenter</li>
 <li>Développement client/server indépendants</li>
+
+</Appear>
+
+</ul>
+
+---
+
+# GraphQL :heart: HTTP
+
+<ul>
+
+<Appear>
+
+<li>Un seul et unique endpoint (`/graphql`)</li>
+<li>Une seule méthode HTTP (POST)</li>
+<li>Echange de données au format JSON</li>
+<li>Sécurisable par token</li>
+
+</Appear>
+
+</ul>
+
+---
+
+# Spring Boot :heart: GraphQL
+
+<ul>
+
+<Appear>
+
+<li>[Librairie expedia](https://github.com/ExpediaGroup/graphql-kotlin)</li>
+<li>Serveur Netty embarqué</li>
+<li>Reactif</li>
+<li>Auto-configuration & Metrics</li>
+<li>Code first</li>
 
 </Appear>
 
@@ -149,70 +229,6 @@ type Query {
 
 ---
 
-# GraphQL :heart: HTTP
-
-<ul>
-
-<Appear>
-
-<li>Un seul et unique endpoint (`/graphql`)</li>
-<li>Une seule méthode HTTP (POST)</li>
-<li>Echange de données au format JSON</li>
-<li>Sécurisable par token</li>
-
-</Appear>
-
-</ul>
-
----
-
-# _GraphQL is a better REST_ :punch:
-
----
-
-# REST 🆚 GraphQL
-
-<Split>
-
-<Appear>
-
-Overfetching : données inutiles
-
-Underfetching : manque de données et plusieurs appels
-
-Plusieurs endpoints
-
-</Appear>
-
-<Appear>
-
-Declarative fetching
-
-Dans une seule requête HTTP sur plusieurs queries
-
-Un seul endpoint
-
-</Appear>
-
-
-</Split>
-
----
-
-# GraphQL :v:
-
-<Appear>
-
-### Contrat d'échange typé toujours à jour
-### Plus performant (nombre de requêtes et declarative fetching)
-### Optimisé pour de la recherche
-### Exploitation simple (intégré à SB, endpoint HTTP)
-
-</Appear>
-
----
-
-
 # Questions ?
 
 <img src='https://media0.giphy.com/media/3ohzdRoOp1FUYbtGDu/giphy.gif' width='50%'/>
@@ -220,6 +236,6 @@ Un seul endpoint
 ---
 # Demo time !
 
-[GraphiQL](http://localhost:8081/playground)
+[GraphiQL](https://stark-river-82454.herokuapp.com/playground)
 
 <img src='https://media3.giphy.com/media/2n8480RCQ2jBe/giphy.gif' width='30%'/>
