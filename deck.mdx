@@ -13,14 +13,6 @@ import "prismjs/components/prism-kotlin"
 
 # GraphQL :heart: Kotlin
 
-<Split>
-
-  <img style="margin-right:2em;" src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin-logo.svg/800px-Kotlin-logo.svg.png' width='100'/>
-
-  <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/1200px-GraphQL_Logo.svg.png' width='300'/>
-
-</Split>
-
 ---
 
 # L'instant promo
@@ -58,13 +50,39 @@ import "prismjs/components/prism-kotlin"
 
 ---
 
-# Son histoire :rocket:
+# Le menu du jour :fork_and_knife:
+
+<Appear>
+
+## GraphQL et Kotlin
+
+## Application de gestion de questions (kommentaire)
+
+## Une ouverture microservices
+
+</Appear>
+
+---
+
+# Le projet kommentaire :star:
+
+<Appear>
+
+## Un server Kotlin avec Expedia
+
+## Un client Kotlin avec Apollo
+
+</Appear>
+
+---
+
+# Histoire de GraphQL :rocket:
 
 <Appear>
 
 ## Créée par Facebook en 2012
 
-## Rendu open source en 2015
+## Rendue open source en 2015
 
 </Appear>
 
@@ -74,7 +92,9 @@ import "prismjs/components/prism-kotlin"
 
 <Appear>
 
-## Langage de requêtage pour API (query, mutation, subscription)
+## Langage de requêtage pour API (spécification)
+
+## query, mutation, subscription
 
 ## Runtime côté server pour traiter les requêtes
 
@@ -89,13 +109,84 @@ import "prismjs/components/prism-kotlin"
 <Appear>
 
 <li>Utilisable sur plusieurs langages</li>
-<li>Documentation auto-générée par le code</li>
-<li>Typé et possible de documenter</li>
+<li>Documentation générée par le code</li>
+<li>Typé et sécurisé</li>
 <li>Développement client/server indépendants</li>
 
 </Appear>
 
 </ul>
+
+---
+
+<CodeSurfer theme={vsDark}>
+
+```graphql title="Schéma de l'API Kommentaire"
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Query {
+  questions: [Question!]!
+  users(pseudo: String): [User] @auth
+}
+
+type Mutation {
+  authenticateUser(pseudo: String!, pwd: String!): User!
+  cancelQuestionVote(questionId: Int!): Question @auth
+  createQuestion(content: String!): Question! @auth
+  createUser(pseudo: String!, pwd: String!): User!
+  downvoteQuestion(questionId: Int!): Question @auth
+  upvoteQuestion(questionId: Int!): Question @auth
+}
+
+type Subscription {
+  question(lastQuestionId: Int): Question!
+}
+
+"Checks if authentication is respected with access_token"
+directive @auth on SCHEMA | SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | INTERFACE | UNION | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+type Question {
+  content: String!
+  downvotes: Int!
+  id: Int!
+  isMine: Boolean!
+  upvotes: Int!
+  user: User
+  userVoteType: UpvoteType!
+  votes: Int!
+}
+
+type User {
+  dateToken: String!
+  id: Int!
+  pseudo: String!
+  pwd: String!
+  question: [Question!]!
+  role: UserRole!
+  token: String!
+}
+
+```
+
+```diff 1:23 subtitle="Query, Mutation, Subscription"
+
+```
+
+
+```diff 25:26 subtitle="Directive d'authentication"
+
+```
+
+```diff 28:47 subtitle="Les entités"
+
+```
+
+
+</CodeSurfer>
 
 ---
 
@@ -122,7 +213,7 @@ import "prismjs/components/prism-kotlin"
 
 <Appear>
 
-<li>[Librairie expedia](https://github.com/ExpediaGroup/graphql-kotlin)</li>
+<li><a href="https://github.com/ExpediaGroup/graphql-kotlin">Librairie expedia</a></li>
 <li>Serveur Netty embarqué</li>
 <li>Reactif</li>
 <li>Auto-configuration & Metrics</li>
@@ -136,106 +227,279 @@ import "prismjs/components/prism-kotlin"
 
 <CodeSurfer theme={vsDark}>
 
-```graphql title="Schéma GraphQL"
-type Adresse {
-  code: String
-  code_hexacle_voie: String
-  code_insee: String
-  code_postal: String
-  code_rivoli: String
-  commune: String
-  compl_voie: String
-  id: Long!
-  maj_par_mediapost: Boolean
-  nom_voie: String
-  num_voie: Int
-  type_voie: String
-  batiments(refParam: String): [Batiment!]!
-}
+```xml
+<dependency>
+  <groupId>com.expediagroup</groupId>
+  <artifactId>
 
-type Batiment {
-  ad_bat_code: String
-  adr: Adresse
-  cas_particulier: String
-  conditions_syndic: String
-  coordonnees: Coordonnees
-  escaliers(ref: String): [Escalier!]!
-  etat: String
-  etat_elig: String
-  etat_net_designer: String
-  etat_prerac: String
-  id: Long!
-  id_immeuble: String
-  id_netdesigner: String
-  nombre_logement_immeuble: Int
-  ref: String
-  source: String
-  type_desserte_abonne: String
-  type_logement: String
-}
-
-type Coordonnees {
-  id: Long
-  rgf93: String
-  wgs84: String
-}
-
-type Escalier {
-  batiment: Batiment
-  etages(ref: String): [Etage!]!
-  id: Long!
-  ref: String
-}
-
-type Etage {
-  escalier: Escalier
-  id: Long!
-  ptos(actif: Boolean, existant: Boolean, ref: String, rompu: Boolean): [Pto!]!
-  ref: String
-}
-
-type Pto {
-  etage: Etage
-  id: Long!
-  ref: String
-  source: String
-  statut_access: String
-  statut_actif: Boolean
-  statut_existant: Boolean
-  statut_net_designer: String
-  type: String
-}
-
-type Query {
-  adresse(codeInsee: String, codePostal: String, codeRivoli: String, cpltVoie: String, numVoie: Int, refVoieOi: String): [Adresse!]!
-}
+  </artifactId>
+  <version>${graphql.version}</version>
+</dependency>
 ```
 
-```diff 69:71 subtitle="Queries pour requêter les adresses"
-
+```xml
+<dependency>
+  <groupId>com.expediagroup</groupId>
+  <artifactId>
+    graphql-kotlin-spring-server
+  </artifactId>
+  <version>${graphql.version}</version>
+</dependency>
 ```
-
-
-```diff 1:15 subtitle="Type Adresse"
-
-```
-
-```diff 17:37 subtitle="Type Batiment"
-
-```
-
 
 </CodeSurfer>
 
 ---
 
-# Questions ?
+# On veut du Kotlin !
 
-<img src='https://media0.giphy.com/media/3ohzdRoOp1FUYbtGDu/giphy.gif' width='50%'/>
+<img src='https://media0.giphy.com/media/JzOyy8vKMCwvK/giphy.gif' width='30%'/>
 
 ---
+
+<CodeSurfer theme={vsDark}>
+
+```kotlin title="Example de query"
+type Query {
+  questions: [Question!]!
+}
+
+type Question {
+  content: String
+  id: Int!
+  isMine: Boolean!
+}
+
+data class Question(val id: Int, val content: String?, @GraphQLIgnore val userId: Int = 0) {
+    @GraphQLDescription("Présente dans le schema et vérifie l'utilisateur connecté")
+    fun isMine(graphQLHttpContext: GraphQLHttpContext) = graphQLHttpContext.user?.id == userId
+}
+
+@Component
+class QuestionQuery: Query {
+    @GraphQLDescription("Retourne la liste des questions")
+    fun questions() : List<Question> {
+        return questionRepository.selectAllQuestions()
+    }
+}
+
+```
+
+```diff 1:9 subtitle="Schema de la query"
+
+```
+
+
+```diff 11:14 subtitle="Entité Question"
+
+```
+
+```diff 16:22 subtitle="Query de liste des questions"
+
+```
+
+```diff 1:9 subtitle="Schema défini au lancement"
+
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={vsDark}>
+
+```kotlin title="Example de mutation"
+type Mutation {
+  createUser(pseudo: String!, pwd: String!): User!
+}
+
+type User {
+  pseudo: String!
+  pwd: String!
+  question: [Question!]!
+}
+
+data class User(val pseudo: String, val pwd: String) {
+    fun question() = questionRepository.findQuestionsFromUserId(id)
+}
+
+@Component
+class UserMutation: Mutation {
+    fun createUser(pseudo: String, pwd: String) : User {
+        if (userRepository.findUserFromPseudo(pseudo) != null) throw HttpException(HttpStatus.BAD_REQUEST, "Pseudo $pseudo already exists")
+        val user = User(0, pseudo, userService.encodePassword(pwd), userService.generateUserToken(), userService.refreshTokenDate(), UserRole.USER)
+        val userId = userRepository.insertUser(user)
+        return user.copy(id = userId ?: 0)
+    }
+}
+
+```
+
+```diff 1:9 subtitle="Schema de la mutation"
+
+```
+
+
+```diff 11:14 subtitle="Entité User"
+
+```
+
+```diff 16:24 subtitle="Mutation de création de user"
+
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={vsDark}>
+
+```kotlin title="Example de subscription"
+type Subscription {
+  question(lastQuestionId: Int): Question!
+}
+
+@Component
+class QuestionSubscription: Subscription {
+    fun question(lastQuestionId: Int?): Flux<Question> {
+        var questionId = lastQuestionId ?: questionRepository.findLastQuestion()?.id ?: 0
+        questionId++
+
+        return Flux.interval(Duration.ofSeconds(1)).flatMap {
+            val question = questionRepository.findQuestion(questionId)
+            question?.let { questionId++ }
+            Mono.justOrEmpty(question)
+        }
+    }
+}
+
+```
+
+```diff 1:3 subtitle="Schema de la subscription"
+
+```
+
+```diff 5:17 subtitle="Subscription sur les nouvelles questions"
+
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={vsDark}>
+
+```kotlin title="Gestion de l'authentication - Session"
+class GraphQLHttpContext(val token: String) : GraphQLContext {
+    val user : User?
+}
+
+@Component
+class GraphQLHttpContextFactory(val userRepository: UserRepository): GraphQLContextFactory<GraphQLHttpContext> {
+    override suspend fun generateContext(): GraphQLHttpContext {
+        return GraphQLHttpContext(
+                token = request.headers.getFirst("access_token") ?: "NONE"
+        )
+    }
+}
+
+    // Dans une query/mutation/subscription ou bien une entité bindée
+    fun upvoteQuestion(questionId: Int, graphQLHttpContext: GraphQLHttpContext): Question? {
+        upvoteRepository.upvoteQuestion(questionId, graphQLHttpContext.user?.id)
+        return questionRepository.findQuestion(questionId)
+    }
+
+```
+
+```diff 1:3 subtitle="Déclaration du contexte"
+
+```
+
+```diff 5:12 subtitle="Création du contexte"
+
+```
+
+```diff 14:18 subtitle="Injection du contexte"
+
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={vsDark}>
+
+```kotlin title="Gestion de l'authentication - Authorisation"
+@GraphQLDirective(name = "auth", description = "Checks if authentication is respected with access_token")
+annotation class AuthenticationDirective
+
+class AuthenticationSchemaDirectiveWiring : KotlinSchemaDirectiveWiring {
+    override fun onField(environment: KotlinFieldDirectiveEnvironment): GraphQLFieldDefinition {
+        val field = environment.element
+        val originalDataFetcher = environment.getDataFetcher()
+
+        val authorisationFetcherFetcher = DataFetcher { dataEnv ->
+            dataEnv.getContext<GraphQLHttpContext>().user ?: throw HttpException(HttpStatus.UNAUTHORIZED, "User not allowed")
+            originalDataFetcher.get(dataEnv)
+        }
+        environment.setDataFetcher(authorisationFetcherFetcher)
+        return field
+    }
+}
+
+class CustomDirectiveWiringFactory : KotlinDirectiveWiringFactory(
+        manualWiring = mapOf(
+                "auth" to AuthenticationSchemaDirectiveWiring()
+        )
+)
+
+@Component
+class QuestionQuery: Query {
+    @GraphQLDescription("Retourne la liste des questions")
+    @AuthenticationDirective
+    fun questions() : List<Question> {
+        return questionRepository.selectAllQuestions()
+    }
+}
+
+```
+
+```diff 1:2 subtitle="Description de la directive"
+
+```
+
+```diff 4:16 subtitle="Comportement de la directive"
+
+```
+
+```diff 10:10 subtitle="Vérification"
+
+```
+
+```diff 18:22 subtitle="Binding entre la directive et le comportement"
+
+```
+
+```diff 24:31 subtitle="Ajout de la directive d'authentication"
+
+```
+
+```diff 27:27 subtitle="Ajout de la directive d'authentication"
+
+```
+
+</CodeSurfer>
+
+---
+
+# Le code du projet
+
+# [Github](https://github.com/kommentaire)
+
+---
+
 # Demo time !
 
-[GraphiQL](https://stark-river-82454.herokuapp.com/playground)
+[Playground](https://stark-river-82454.herokuapp.com/playground)
 
 <img src='https://media3.giphy.com/media/2n8480RCQ2jBe/giphy.gif' width='30%'/>
