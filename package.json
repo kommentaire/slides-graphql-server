@@ -18,6 +18,6 @@
     "prismjs": "1.19.0"
   },
   "resolutions": {
-    "mdx-deck/**/gatsby": "2.18.4"
+    "mdx-deck/**/gatsby": "2.20.6"
   }
 }
